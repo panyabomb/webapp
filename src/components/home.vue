@@ -10,11 +10,29 @@
             </v-card-title>
           </v-card>
         </v-flex>
+
+        <v-flex d-flex xs6 >
+          <v-card color="green" class="white--text" v-if="value.alive2">
+            <v-card-title primary-title>
+              <div>
+                <h2 class="headline mb-0">Online!</h2>
+              </div>
+            </v-card-title>
+          </v-card>
+          <v-card color="red" class="white--text" v-else>
+            <v-card-title primary-title>
+              <div>
+                <h2 class="headline mb-0">Offline!</h2>
+              </div>
+            </v-card-title>
+          </v-card>
+        </v-flex>
+
         <v-flex d-flex xs6 >
           <v-card>
             <v-card-title primary-title>
               <div>
-                <h3 class="headline mb-0">OnlineNow</h3>
+                <h3 class="headline mb-0">Connect</h3>
                 <div><h1>{{value.onlinenow}}</h1></div>
                 <div>
                   <h3>Devices</h3>
@@ -68,26 +86,65 @@
         </v-card>
       </v-flex>
       </v-layout>
+</br>
+      <v-layout>
+        <v-flex d-flex xs6 >
+          <v-card>
+            <v-card-title primary-title>
+              <div>
+                <h3 class="headline mb-0">Humidity</h3>
+                <div><h2 style="color:#ff6666">{{lasH >= 0 ? lasH : 'N/A'}} %</h2></div>
+                <!-- <v-progress-linear value="value.utilizein" height="20" color="info"></v-progress-linear> -->
+              </div>
+            </v-card-title>
+          </v-card>
+        </v-flex>
+        <v-flex d-flex xs6 >
+          <v-card>
+            <v-card-title primary-title>
+              <div>
+                <h3 class="headline mb-0">Temparature</h3>
+                <div><h2 style="color:#ff6666">{{lasT != 'Wrong' ? lasT : 'N/A'}} °C</h2></div>
+                <!-- <v-progress-linear value="value.utilizeout" height="20" color="info"></v-progress-linear> -->
+              </div>
+            </v-card-title>
+          </v-card>
+        </v-flex>
+      </v-layout>
 
     </br>
     <v-layout>
-      <v-flex d-flex xs6 >
+      <v-flex d-flex xs4 >
         <v-card>
           <v-card-title primary-title>
-            <div>
-              <h3 class="headline mb-0">Packetloss</h3>
-            </br><div><h2>{{value.packetloss}} </h2></div>
+            <div >
+              <h3 class="headline mb-0">Packet</h3>
+              <h3 class="headline mb-0">loss</h3>
+            <div><h2 style="color:#ff6666" >{{parseInt(value.packetloss)}} %</h2></div>
             </div>
           </v-card-title>
         </v-card>
       </v-flex>
-      <v-flex d-flex xs6 >
+      <v-flex d-flex xs4 >
         <v-card>
           <v-card-title primary-title>
             <div>
-              <h3 class="headline mb-0">Utilization</h3>
-              <div><h3>{{value.utilize}} %</h3></div>
-              <v-progress-linear value="value.utilize" height="20" color="info"></v-progress-linear>
+              <h3 class="headline mb-0">Utilize</h3>
+              <h3 class="headline mb-0">In</h3>
+              <div><h2 style="color:#ff6666">{{value.utilizein}} %</h2></div>
+              <!-- <v-progress-linear value="value.utilizein" height="20" color="info"></v-progress-linear> -->
+            </div>
+          </v-card-title>
+        </v-card>
+      </v-flex>
+      <v-flex d-flex xs4 >
+        <v-card>
+          <v-card-title primary-title>
+            <div>
+              <h3 class="headline mb-0">Utilize</h3>
+              <h3 class="headline mb-0">Out</h3>
+              <div><h2 style="color:#ff6666">{{value.utilizeout}} %</h2></div>
+              <!-- <v-progress-linear value="value.utilizeout" height="20" color="info"></v-progress-linear> -->
             </div>
           </v-card-title>
         </v-card>
@@ -95,16 +152,63 @@
     </v-layout>
   </br>
 
-<div id="wrapper" >
-  <h3 class="headline mb-0" >Inbound / Outbound (Mb)</h3></br>
-    <line-chart :chart-data="datacollection"
-    :options="{responsive: true, maintainAspectRatio: false, elements: { point: { radius: 2 } }}"
-    :height="150"
-    ></line-chart>
-  </br>
-  </div>
+  <v-layout>
+    <v-flex d-flex xs6 >
+      <v-card>
+        <v-card-title primary-title>
+          <div>
+<h3 class="headline mb-0">Inbound</h3>
+<h3 class="headline mb-0">Limit</h3>
 
-<h3 class="headline mb-0" >Download / Upload (Mb/s)</h3></br>
+            <v-select
+              style="width: 150px;"
+                v-bind:items="items"
+                v-model="inbo"
+                :label="'Limit '+ value.limitin"
+                single-line
+                bottom
+              ></v-select>
+              </div>
+              <div>
+              <v-btn @click="inboundLimit" color="primary">Submit</v-btn>
+            </div>
+        </v-card-title>
+      </v-card>
+    </v-flex>
+    <v-flex d-flex xs6 >
+      <v-card>
+        <v-card-title primary-title>
+            <div>
+        <h3 class="headline mb-0">Outbound</h3>
+        <h3 class="headline mb-0">Limit</h3>
+
+            <v-select
+                style="width: 150px;"
+                v-bind:items="items"
+                v-model="outbo"
+                :label="'Limit '+ value.limitout"
+                single-line
+                bottom
+              ></v-select>
+              </div>
+              <div>
+         <v-btn @click="outboundLimit" color="primary">Submit</v-btn>
+            </div>
+        </v-card-title>
+      </v-card>
+    </v-flex>
+  </v-layout>
+</br>
+
+<h3 class="headline mb-0">Inbound / Outbound (Mb)</h3></br>
+
+  <line-chart :chart-data="datacollection"
+  :options="{responsive: true, maintainAspectRatio: false, elements: { point: { radius: 2 } }}"
+  :height="150"
+  ></line-chart>
+
+</br>
+<h3 class="headline mb-0">Download / Upload (Mb/s)</h3></br>
 <line-chart :chart-data="datacollectionspeed"
 :options="{responsive: true, maintainAspectRatio: false, elements: { point: { radius: 2 } }}"
 :height="150"
@@ -116,6 +220,7 @@
 <script>
 import LineChart from './lineChart.js'
 import {Data} from '@/components/firebase'
+import firebase from 'firebase'
 export default {
   components: {
     LineChart
@@ -137,7 +242,14 @@ export default {
       valueDown: [],
       speedlabel: [],
       lasdown: null,
-      lasup: null
+      lasup: null,
+      valuet: [],
+      valueh: [],
+      lasT: null,
+      lasH: null,
+      items: [10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000],
+      inbo: '',
+      outbo: ''
     }
   },
   created () {
@@ -158,6 +270,10 @@ export default {
       vm.lasdown = myarray[myarray.length - 1]
       myarray = vm.value.speedtest.map(data => data.valueup)
       vm.lasup = myarray[myarray.length - 1]
+      var dht = vm.value.temparature.map(data => data.valueh)
+      vm.lasH = dht[dht.length - 1]
+      dht = vm.value.temparature.map(data => data.valuet)
+      vm.lasT = dht[dht.length - 1]
     }, 3000)
   },
   firebase: {
@@ -198,6 +314,18 @@ export default {
           }
         ]
       }
+    },
+    inboundLimit () {
+      var key = this.dataTouse.find(datas => datas.node === 'Node1')
+      firebase.database().ref('/db/' + key['.key']).update({
+        limitin: this.inbo
+      })
+    },
+    outboundLimit () {
+      var key = this.dataTouse.find(datas => datas.node === 'Node1')
+      firebase.database().ref('/db/' + key['.key']).update({
+        limitout: this.outbo
+      })
     }
   }
 }
