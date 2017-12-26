@@ -93,7 +93,7 @@
             <v-card-title primary-title>
               <div>
                 <h3 class="headline mb-0">Humidity</h3>
-                <div><h2 style="color:#ff6666">{{lasH}} %</h2></div>
+                <div><h2 style="color:#ff6666">{{lasH >= 0 ? lasH : 'N/A'}} %</h2></div>
                 <!-- <v-progress-linear value="value.utilizein" height="20" color="info"></v-progress-linear> -->
               </div>
             </v-card-title>
@@ -104,7 +104,7 @@
             <v-card-title primary-title>
               <div>
                 <h3 class="headline mb-0">Temparature</h3>
-                <div><h2 style="color:#ff6666">{{lasT}} °C</h2></div>
+                <div><h2 style="color:#ff6666">{{lasT != 'Wrong' ? lasT : 'N/A'}} °C</h2></div>
                 <!-- <v-progress-linear value="value.utilizeout" height="20" color="info"></v-progress-linear> -->
               </div>
             </v-card-title>
@@ -131,7 +131,7 @@
             <div>
               <h3 class="headline mb-0">Utilize</h3>
               <h3 class="headline mb-0">In</h3>
-              <div><h2 style="color:#ff6666">{{value.utilizein}} %</h2></div>
+              <div><h2 style="color:#ff6666">{{value.utilizein ? value.utilizein.toFixed(3) : 'N/A'}} %</h2></div>
               <!-- <v-progress-linear value="value.utilizein" height="20" color="info"></v-progress-linear> -->
             </div>
           </v-card-title>
@@ -143,7 +143,7 @@
             <div>
               <h3 class="headline mb-0">Utilize</h3>
               <h3 class="headline mb-0">Out</h3>
-              <div><h2 style="color:#ff6666">{{value.utilizeout}} %</h2></div>
+              <div><h2 style="color:#ff6666">{{value.utilizeout ? value.utilizeout.toFixed(3) : 'N/A'}} %</h2></div>
               <!-- <v-progress-linear value="value.utilizeout" height="20" color="info"></v-progress-linear> -->
             </div>
           </v-card-title>
@@ -200,12 +200,13 @@
   </v-layout>
 </br>
 
+<div>
 <h3 class="headline mb-0">Inbound / Outbound (Mb)</h3></br>
-
-  <line-chart :chart-data="datacollection"
+<line-chart :chart-data="datacollection"
   :options="{responsive: true, maintainAspectRatio: false, elements: { point: { radius: 2 } }}"
   :height="150"
   ></line-chart>
+</div>
 
 </br>
 <h3 class="headline mb-0">Download / Upload (Mb/s)</h3></br>

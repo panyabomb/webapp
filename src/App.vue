@@ -29,13 +29,16 @@
           </v-list-tile>
         </v-list>
       </v-navigation-drawer>
-      <v-toolbar color="cyan" dark fixed app>
+      <v-toolbar
+      color="cyan"
+      dark fixed app
+      >
         <v-toolbar-side-icon @click.stop="drawer = !drawer" ></v-toolbar-side-icon>
         <v-toolbar-title>Application</v-toolbar-title>
       </v-toolbar>
-      <v-content>
+      <v-container>
 <router-view></router-view>
-      </v-content>
+</v-container>
       <v-footer color="cyan" app>
         <span class="white--text">&copy; wipoo + panya 2017</span>
       </v-footer>
