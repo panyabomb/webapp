@@ -36,7 +36,7 @@
         <v-toolbar-side-icon @click.stop="drawer = !drawer" ></v-toolbar-side-icon>
         <v-toolbar-title class="white--text" >Monitoring</v-toolbar-title>
         <v-spacer></v-spacer>
-        <iframe src="http://free.timeanddate.com/clock/i61l0dq7/n28/fn16/fs16/fcfff/tct/pct/tt1/tw0" frameborder="0" width="146" height="21" allowTransparency="true" class="not-active"></iframe>
+        <iframe src="https://free.timeanddate.com/clock/i61l0dq7/n28/fn16/fs16/fcfff/tct/pct/tt1/tw0" frameborder="0" width="146" height="21" allowTransparency="true" class="not-active"></iframe>
       </v-toolbar>
       <v-container>
 <router-view></router-view>
