@@ -15,14 +15,14 @@
           <v-card color="green" class="white--text" v-if="value.alive2">
             <v-card-title primary-title>
               <div>
-                <h2 class="headline mb-0">Online!</h2>
+                <h2 class="headline mb-0">Online</h2>
               </div>
             </v-card-title>
           </v-card>
           <v-card color="red" class="white--text" v-else>
             <v-card-title primary-title>
               <div>
-                <h2 class="headline mb-0">Offline!</h2>
+                <h2 class="headline mb-0">Offline</h2>
               </div>
             </v-card-title>
           </v-card>
@@ -30,23 +30,58 @@
 
         <v-flex d-flex xs6 >
           <v-card>
-            <v-card-title primary-title>
+            <v-card-text class="px-0">
               <div>
-                <h3 class="headline mb-0">Connect</h3>
+                <h3 class="headline mb-0">Connected</h3>
                 <div><h1>{{value.onlinenow}}</h1></div>
                 <div>
                   <h3>Devices</h3>
                 </div>
               </div>
-            </v-card-title>
+            </v-card-text>
           </v-card>
         </v-flex>
       </v-layout>
 </br>
+<v-layout>
+  <v-flex d-flex xs4 >
+    <v-card>
+        <v-card-text class="px-0">
+        <div>
+          <h3 class="headline mb-0">CPU Usage</h3>
+
+          <div><h2 style="color:#ff6666">{{value.cpu}} %</h2></div>
+        </div>
+      </v-card-text>
+
+    </v-card>
+  </v-flex>
+  <v-flex d-flex xs4 >
+    <v-card>
+      <v-card-text class="px-0">
+        <div>
+          <h3 class="headline mb-0">Memory Used</h3>
+          <div><h2 style="color:#ff6666">{{value.memory ? value.memory.toFixed(3) : 'N/A'}} %</h2></div>
+        </div>
+      </v-card-text>
+    </v-card>
+  </v-flex>
+  <v-flex d-flex xs4 >
+    <v-card>
+      <v-card-text class="px-0">
+        <div>
+          <h3 class="headline mb-0">Temp</h3>
+          <div><h2 style="color:#ff6666" v-if="value.temparature">{{value.temparature.valueswtemp}} °C</h2></div>
+        </div>
+    </v-card-text>
+    </v-card>
+  </v-flex>
+</v-layout>
+</br>
       <v-layout>
       <v-flex d-flex xs6 >
         <v-card >
-          <v-card-title primary-title>
+          <v-card-text class="px-0">
             <div>
               <h3 class="headline mb-0">Download</h3>
               <div >
@@ -61,13 +96,13 @@
                 </v-progress-circular>
               </div>
             </div>
-          </v-card-title>
+          </v-card-text>
         </v-card>
       </v-flex>
 
       <v-flex d-flex xs6 >
         <v-card>
-          <v-card-title primary-title>
+        <v-card-text class="px-0">
             <div>
               <h3 class="headline mb-0">Upload</h3>
               <div >
@@ -82,7 +117,7 @@
                 </v-progress-circular>
               </div>
             </div>
-          </v-card-title>
+          </v-card-text>
         </v-card>
       </v-flex>
       </v-layout>
@@ -90,24 +125,24 @@
       <v-layout>
         <v-flex d-flex xs6 >
           <v-card>
-            <v-card-title primary-title>
+            <v-card-text class="px-0">
               <div>
                 <h3 class="headline mb-0">Humidity</h3>
-                <div><h2 style="color:#ff6666">{{lasH >= 0 ? lasH : 'N/A'}} %</h2></div>
-                <!-- <v-progress-linear value="value.utilizein" height="20" color="info"></v-progress-linear> -->
+                <h3 class="headline mb-0">Room</h3>
+                <div><h2 style="color:#ff6666" v-if="value.temparature">{{value.temparature.valueh >= 0 ? value.temparature.valueh : 'N/A'}} %</h2></div>
               </div>
-            </v-card-title>
+            </v-card-text>
           </v-card>
         </v-flex>
         <v-flex d-flex xs6 >
           <v-card>
-            <v-card-title primary-title>
+            <v-card-text class="px-0">
               <div>
-                <h3 class="headline mb-0">Temparature</h3>
-                <div><h2 style="color:#ff6666">{{lasT != 'Wrong' ? lasT : 'N/A'}} °C</h2></div>
-                <!-- <v-progress-linear value="value.utilizeout" height="20" color="info"></v-progress-linear> -->
+                <h3 class="headline mb-0">Temperature</h3>
+                <h3 class="headline mb-0">Room</h3>
+                <div><h2 style="color:#ff6666" v-if="value.temparature">{{value.temparature.valuet != 'Wrong' ? value.temparature.valuet : 'N/A'}} °C</h2></div>
               </div>
-            </v-card-title>
+            </v-card-text>
           </v-card>
         </v-flex>
       </v-layout>
@@ -116,105 +151,132 @@
     <v-layout>
       <v-flex d-flex xs4 >
         <v-card>
-          <v-card-title primary-title>
+          <v-card-text class="px-0">
             <div >
               <h3 class="headline mb-0">Packet</h3>
               <h3 class="headline mb-0">loss</h3>
             <div><h2 style="color:#ff6666" >{{parseInt(value.packetloss)}} %</h2></div>
             </div>
-          </v-card-title>
+          </v-card-text>
         </v-card>
       </v-flex>
       <v-flex d-flex xs4 >
         <v-card>
-          <v-card-title primary-title>
+          <v-card-text class="px-0">
             <div>
               <h3 class="headline mb-0">Utilize</h3>
               <h3 class="headline mb-0">In</h3>
               <div><h2 style="color:#ff6666">{{value.utilizein ? value.utilizein.toFixed(3) : 'N/A'}} %</h2></div>
-              <!-- <v-progress-linear value="value.utilizein" height="20" color="info"></v-progress-linear> -->
             </div>
-          </v-card-title>
+          </v-card-text>
         </v-card>
       </v-flex>
       <v-flex d-flex xs4 >
         <v-card>
-          <v-card-title primary-title>
+          <v-card-text class="px-0">
             <div>
               <h3 class="headline mb-0">Utilize</h3>
               <h3 class="headline mb-0">Out</h3>
               <div><h2 style="color:#ff6666">{{value.utilizeout ? value.utilizeout.toFixed(3) : 'N/A'}} %</h2></div>
-              <!-- <v-progress-linear value="value.utilizeout" height="20" color="info"></v-progress-linear> -->
             </div>
-          </v-card-title>
+          </v-card-text>
         </v-card>
       </v-flex>
     </v-layout>
   </br>
 
+  <v-layout >
+    <v-flex d-flex xs12 >
+      <v-card>
+
+           <v-card-text class="px-0">
+            <h3 class="headline mb-0">Main Link</h3></br>
+            <div>
+              <v-layout>
+                <v-flex d-flex xs6 >
+                  <i class="fas fa-download" style="font-size:3em; color:green "></i>
+                  <h2 style="color:green" v-if="value.mainlink">{{value.mainlink.in}} Mb</h2>
+                  </v-flex>
+                  <v-flex d-flex xs6 >
+                    <i class="fas fa-upload" style="font-size:3em; color:Tomato "></i>
+                    <h2 style="color:#ff6666" v-if="value.mainlink">{{value.mainlink.out}} Mb</h2>
+                    </v-flex>
+                  </v-layout>
+          </div>
+        </div>
+        </v-card-text>
+
+      </v-card>
+    </v-flex>
+  </v-layout>
+
+</br>
   <v-layout>
     <v-flex d-flex xs6 >
       <v-card>
-        <v-card-title primary-title>
+      <v-card-text class="px-0">
           <div>
 <h3 class="headline mb-0">Inbound</h3>
-<h3 class="headline mb-0">Limit</h3>
+<h3 class="headline mb-0">Alert</h3>
 
-            <v-select
+            <center><v-select
               style="width: 150px;"
                 v-bind:items="items"
                 v-model="inbo"
-                :label="'Limit '+ value.limitin"
+                :label="'Alert '+ value.limitin"
                 single-line
                 bottom
-              ></v-select>
+              ></v-select></center>
               </div>
               <div>
               <v-btn @click="inboundLimit" color="primary">Submit</v-btn>
             </div>
-        </v-card-title>
+        </v-card-text>
       </v-card>
     </v-flex>
     <v-flex d-flex xs6 >
       <v-card>
-        <v-card-title primary-title>
+        <v-card-text class="px-0">
             <div>
         <h3 class="headline mb-0">Outbound</h3>
-        <h3 class="headline mb-0">Limit</h3>
+        <h3 class="headline mb-0">Alert</h3>
 
-            <v-select
+            <center><v-select
                 style="width: 150px;"
                 v-bind:items="items"
                 v-model="outbo"
-                :label="'Limit '+ value.limitout"
+                :label="'Alert '+ value.limitout"
                 single-line
                 bottom
-              ></v-select>
+              ></v-select></center>
               </div>
               <div>
          <v-btn @click="outboundLimit" color="primary">Submit</v-btn>
             </div>
-        </v-card-title>
+      </v-card-text>
       </v-card>
     </v-flex>
   </v-layout>
 </br>
 
-<div>
+<div style="float:left;">
 <h3 class="headline mb-0">Inbound / Outbound (Mb)</h3></br>
 <line-chart :chart-data="datacollection"
-  :options="{responsive: true, maintainAspectRatio: false, elements: { point: { radius: 2 } }}"
+  :options="{responsive: true, maintainAspectRatio: false, elements: { point: { radius: 1 }
+   }}"
   :height="150"
   ></line-chart>
 </div>
 
 </br>
+<div style="float:left;">
 <h3 class="headline mb-0">Download / Upload (Mb/s)</h3></br>
 <line-chart :chart-data="datacollectionspeed"
-:options="{responsive: true, maintainAspectRatio: false, elements: { point: { radius: 2 } }}"
+:options="{responsive: true, maintainAspectRatio: false, elements: { point: { radius: 1 }
+ }}"
 :height="150"
 ></line-chart>
-
+</div>
 </v-app>
 </template>
 
@@ -257,24 +319,19 @@ export default {
     setTimeout(() => {
       var vm = this
       let getData = this.dataTouse.find(datas => datas.node === 'Node1')
-      console.log(getData)
       vm.value = getData
-      vm.valueInbound = vm.value.inbound.map(data => data.value)
-      vm.valueOutbound = vm.value.outbound.map(data => data.value)
-      vm.label = vm.value.inbound.map(data => data.date + ' ' + data.time)
+      vm.valueInbound = vm.value.inbound.map(data => data.value).reverse().slice(0, 12).reverse()
+      vm.valueOutbound = vm.value.outbound.map(data => data.value).reverse().slice(0, 12).reverse()
+      vm.label = vm.value.inbound.map(data => data.time).reverse().slice(0, 12).reverse()
       this.fillData()
-      vm.valueUp = vm.value.speedtest.map(data => data.valueup)
-      vm.valueDown = vm.value.speedtest.map(data => data.valuedown)
-      vm.speedlabel = vm.value.speedtest.map(data => data.date + ' ' + data.time)
+      vm.valueUp = vm.value.speedtest.map(data => data.valueup).reverse().slice(0, 12).reverse()
+      vm.valueDown = vm.value.speedtest.map(data => data.valuedown).reverse().slice(0, 12).reverse()
+      vm.speedlabel = vm.value.speedtest.map(data => data.time).reverse().slice(0, 12).reverse()
       this.fillDataspeed()
-      var myarray = vm.value.speedtest.map(data => data.valuedown)
+      var myarray = vm.valueUp
       vm.lasdown = myarray[myarray.length - 1]
-      myarray = vm.value.speedtest.map(data => data.valueup)
+      myarray = vm.valueDown
       vm.lasup = myarray[myarray.length - 1]
-      var dht = vm.value.temparature.map(data => data.valueh)
-      vm.lasH = dht[dht.length - 1]
-      dht = vm.value.temparature.map(data => data.valuet)
-      vm.lasT = dht[dht.length - 1]
     }, 3000)
   },
   firebase: {
@@ -331,7 +388,6 @@ export default {
   }
 }
 </script>
-
 <style>
   .small {
     max-width: 600px;

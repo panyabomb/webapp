@@ -257,19 +257,18 @@ export default {
     setTimeout(() => {
       var vm = this
       let getData = this.dataTouse.find(datas => datas.node === 'Node2')
-      console.log(getData)
       vm.value = getData
-      vm.valueInbound = vm.value.inbound.map(data => data.value)
-      vm.valueOutbound = vm.value.outbound.map(data => data.value)
-      vm.label = vm.value.inbound.map(data => data.date + ' ' + data.time)
+      vm.valueInbound = vm.value.inbound.map(data => data.value).reverse().slice(0, 12).reverse()
+      vm.valueOutbound = vm.value.outbound.map(data => data.value).reverse().slice(0, 12).reverse()
+      vm.label = vm.value.inbound.map(data => data.time).reverse().slice(0, 12).reverse()
       this.fillData()
-      vm.valueUp = vm.value.speedtest.map(data => data.valueup)
-      vm.valueDown = vm.value.speedtest.map(data => data.valuedown)
-      vm.speedlabel = vm.value.speedtest.map(data => data.date + ' ' + data.time)
+      vm.valueUp = vm.value.speedtest.map(data => data.valueup).reverse().slice(0, 12).reverse()
+      vm.valueDown = vm.value.speedtest.map(data => data.valuedown).reverse().slice(0, 12).reverse()
+      vm.speedlabel = vm.value.speedtest.map(data => data.time).reverse().slice(0, 12).reverse()
       this.fillDataspeed()
-      var myarray = vm.value.speedtest.map(data => data.valuedown)
+      var myarray = vm.valueUp
       vm.lasdown = myarray[myarray.length - 1]
-      myarray = vm.value.speedtest.map(data => data.valueup)
+      myarray = vm.valueDown
       vm.lasup = myarray[myarray.length - 1]
       var dht = vm.value.temparature.map(data => data.valueh)
       vm.lasH = dht[dht.length - 1]
