@@ -89,7 +89,7 @@
                   v-bind:size="100"
                   v-bind:width="15"
                   v-bind:rotate="90"
-                  v-bind:value="lasdown"
+                  v-bind:value="parseInt(lasdown) ? parseInt(lasdown) : 0"
                   color="green"
                   >
                   <h3>{{lasdown}}</h3> Mb/s
@@ -110,7 +110,7 @@
                   v-bind:size="100"
                   v-bind:width="15"
                   v-bind:rotate="90"
-                  v-bind:value="lasup"
+                  v-bind:value="parseInt(lasup) ? parseInt(lasup) : 0"
                   color="green"
                   >
                   <h3>{{lasup}}</h3> Mb/s
@@ -259,22 +259,21 @@
   </v-layout>
 </br>
 
-<div style="float:left;">
+<div style="float:left;" v-if="datacollection">
 <h3 class="headline mb-0">Inbound / Outbound (Mb)</h3></br>
 <line-chart :chart-data="datacollection"
   :options="{responsive: true, maintainAspectRatio: false, elements: { point: { radius: 1 }
    }}"
-  :height="150"
+  :height="250"
   ></line-chart>
 </div>
-
 </br>
-<div style="float:left;">
+<div style="float:left;" v-if="datacollectionspeed">
 <h3 class="headline mb-0">Download / Upload (Mb/s)</h3></br>
 <line-chart :chart-data="datacollectionspeed"
 :options="{responsive: true, maintainAspectRatio: false, elements: { point: { radius: 1 }
  }}"
-:height="150"
+:height="250"
 ></line-chart>
 </div>
 </v-app>
@@ -288,9 +287,28 @@ export default {
   components: {
     LineChart
   },
-  mounted () {
-    this.fillData()
-    this.fillDataspeed()
+  computed: {
+  },
+  async mounted () {
+    await this.$bindAsArray('todos', Data, null, () => {
+      var vm = this
+      let getData = this.todos.find(datas => datas.node === 'Node1')
+      vm.value = getData
+      vm.valueInbound = vm.value.inbound.map(data => data.value).reverse().slice(0, 12).reverse()
+      vm.valueOutbound = vm.value.outbound.map(data => data.value).reverse().slice(0, 12).reverse()
+      vm.label = vm.value.inbound.map(data => data.time).reverse().slice(0, 12).reverse()
+      // this.fillData()
+      vm.valueUp = vm.value.speedtest.map(data => data.valueup).reverse().slice(0, 12).reverse()
+      vm.valueDown = vm.value.speedtest.map(data => data.valuedown).reverse().slice(0, 12).reverse()
+      vm.speedlabel = vm.value.speedtest.map(data => data.time).reverse().slice(0, 12).reverse()
+      // this.fillDataspeed()
+      var myarray = vm.valueUp
+      vm.lasdown = myarray[myarray.length - 1]
+      myarray = vm.valueDown
+      vm.lasup = myarray[myarray.length - 1]
+      this.fillData()
+      this.fillDataspeed()
+    })
   },
   data () {
     return {
@@ -312,30 +330,28 @@ export default {
       lasH: null,
       items: [10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000],
       inbo: '',
-      outbo: ''
+      outbo: '',
+      todos: ''
     }
   },
   created () {
-    setTimeout(() => {
-      var vm = this
-      let getData = this.dataTouse.find(datas => datas.node === 'Node1')
-      vm.value = getData
-      vm.valueInbound = vm.value.inbound.map(data => data.value).reverse().slice(0, 12).reverse()
-      vm.valueOutbound = vm.value.outbound.map(data => data.value).reverse().slice(0, 12).reverse()
-      vm.label = vm.value.inbound.map(data => data.time).reverse().slice(0, 12).reverse()
-      this.fillData()
-      vm.valueUp = vm.value.speedtest.map(data => data.valueup).reverse().slice(0, 12).reverse()
-      vm.valueDown = vm.value.speedtest.map(data => data.valuedown).reverse().slice(0, 12).reverse()
-      vm.speedlabel = vm.value.speedtest.map(data => data.time).reverse().slice(0, 12).reverse()
-      this.fillDataspeed()
-      var myarray = vm.valueUp
-      vm.lasdown = myarray[myarray.length - 1]
-      myarray = vm.valueDown
-      vm.lasup = myarray[myarray.length - 1]
-    }, 3000)
-  },
-  firebase: {
-    dataTouse: Data
+    // setTimeout(() => {
+    //   var vm = this
+    //   let getData = this.dataTouse.find(datas => datas.node === 'Node1')
+    //   vm.value = getData
+    //   vm.valueInbound = vm.value.inbound.map(data => data.value).reverse().slice(0, 12).reverse()
+    //   vm.valueOutbound = vm.value.outbound.map(data => data.value).reverse().slice(0, 12).reverse()
+    //   vm.label = vm.value.inbound.map(data => data.time).reverse().slice(0, 12).reverse()
+    //   this.fillData()
+    //   vm.valueUp = vm.value.speedtest.map(data => data.valueup).reverse().slice(0, 12).reverse()
+    //   vm.valueDown = vm.value.speedtest.map(data => data.valuedown).reverse().slice(0, 12).reverse()
+    //   vm.speedlabel = vm.value.speedtest.map(data => data.time).reverse().slice(0, 12).reverse()
+    //   this.fillDataspeed()
+    //   var myarray = vm.valueUp
+    //   vm.lasdown = myarray[myarray.length - 1]
+    //   myarray = vm.valueDown
+    //   vm.lasup = myarray[myarray.length - 1]
+    // }, 3000)
   },
   methods: {
     fillData () {
@@ -354,9 +370,6 @@ export default {
         ]
       }
     },
-    getRandomInt () {
-      return Math.floor(Math.random() * (50 - 5 + 1)) + 5
-    },
     fillDataspeed () {
       this.datacollectionspeed = {
         labels: this.speedlabel,
@@ -374,14 +387,14 @@ export default {
       }
     },
     inboundLimit () {
-      var key = this.dataTouse.find(datas => datas.node === 'Node1')
-      firebase.database().ref('/db/' + key['.key']).update({
+      // var key = this.dataTouse.find(datas => datas.node === 'Node1')
+      firebase.database().ref('/db/' + this.value['.key']).update({
         limitin: this.inbo
       })
     },
     outboundLimit () {
-      var key = this.dataTouse.find(datas => datas.node === 'Node1')
-      firebase.database().ref('/db/' + key['.key']).update({
+      // var key = this.dataTouse.find(datas => datas.node === 'Node1')
+      firebase.database().ref('/db/' + this.value['.key']).update({
         limitout: this.outbo
       })
     }
