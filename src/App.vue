@@ -5,6 +5,8 @@
         fixed
         v-model="drawer"
         app
+        disable-route-watcher
+        v-if="this.username"
       >
         <v-list dense>
           <v-list-tile >
@@ -13,36 +15,53 @@
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>
-                <router-link to="/" style="text-decoration:none"><h3>node1</h3></router-link>
+                <router-link to="/home" style="text-decoration:none" ><h3 @click="closedrawer">Sw415</h3></router-link>
               </v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
+
           <v-list-tile >
             <v-list-tile-action>
               <v-icon>Node</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>
-                <router-link to="/node2"style="text-decoration:none"><h3>node2</h3></router-link>
+                <router-link to="/node2"style="text-decoration:none"><h3 @click="closedrawer">Sw4503</h3></router-link>
               </v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
+
+          <v-list-tile >
+            <v-list-tile-action>
+              <v-icon>Node</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>
+                <router-link to="/node3"style="text-decoration:none"><h3 @click="closedrawer">Node3</h3></router-link>
+              </v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+
         </v-list>
       </v-navigation-drawer>
       <v-toolbar
       color="cyan"
       dark fixed app
       >
-        <v-toolbar-side-icon @click.stop="drawer = !drawer" ></v-toolbar-side-icon>
-        <v-toolbar-title class="white--text" >Monitoring</v-toolbar-title>
+        <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+        <v-toolbar-title class="white--text" >{{username}}</v-toolbar-title>
         <v-spacer></v-spacer>
+
         <iframe src="https://free.timeanddate.com/clock/i61l0dq7/n28/fn16/fs16/fcfff/tct/pct/tt1/tw0" frameborder="0" width="146" height="21" allowTransparency="true" class="not-active"></iframe>
+        <v-btn icon v-on:click="signOut" v-if="this.logoutcheck">
+        <v-icon>arrow_back</v-icon>
+        </v-btn>
       </v-toolbar>
       <v-container>
 <router-view></router-view>
 </v-container>
       <v-footer color="cyan" app>
-        <span class="white--text">&copy; wipoo + panya 2017</span>
+        <span class="white--text">&copy; wipoo + panya 2018 ver 11.2</span>
       </v-footer>
     </v-app>
 
@@ -50,12 +69,49 @@
 </template>
 
 <script>
+import firebase from 'firebase'
 export default {
   name: 'app',
   data () {
     return {
+      logoutcheck: '',
       drawer: false,
-      value: ''
+      value: '',
+      username: ''
+    }
+  },
+  created () {
+    window.scrollTo(0, 0)
+  },
+  mounted () {
+    console.log(firebase.auth().currentUser.email)
+    this.logoutcheck = firebase.auth().currentUser.email
+    var res = this.logoutcheck.split('@')
+    this.username = res[0]
+  },
+  computed: {
+    user () {
+      return this.$store.getters.getUser
+      // return this.$store.getters.currentUser
+      // console.log(this.$store.mutations.currentUser)
+    }
+  },
+  methods: {
+    setUser: function () {
+      this.$store.dispatch('setUser')
+    },
+    signOut: function () {
+      if (this.drawer === true) {
+        this.drawer = false
+      }
+      firebase.auth()
+      .signOut()
+      .then(() => {
+        this.$router.replace('/')
+      })
+    },
+    closedrawer: function () {
+      this.drawer = false
     }
   }
 }

@@ -6,15 +6,14 @@
             <v-card-title primary-title>
               <!-- <btn class="button" v-on:click="signOut" v-if="user">Sign-out</btn> -->
               <div>
-                <h2 class="headline mb-1">Node</h2>
-                <h2 class="headline mb-1">{{namenode}}</h2>
+                <h2 class="headline mb-0">{{value.node}}</h2>
               </div>
             </v-card-title>
           </v-card>
         </v-flex>
 
         <v-flex d-flex xs6 >
-          <v-card color="green" class="white--text" v-if="nodeonline.alive2">
+          <v-card color="green" class="white--text" v-if="value.alive2">
             <v-card-title primary-title>
               <div>
                 <h2 class="headline mb-0">Online</h2>
@@ -45,7 +44,7 @@
         </v-flex>
       </v-layout>
 </br>
-<v-layout>
+<!-- <v-layout>
   <v-flex d-flex xs4 >
     <v-card>
         <v-card-text class="px-0">
@@ -79,7 +78,7 @@
     </v-card>
   </v-flex>
 </v-layout>
-</br>
+</br> -->
       <v-layout>
       <v-flex d-flex xs6 >
         <v-card >
@@ -124,7 +123,7 @@
       </v-flex>
       </v-layout>
 </br>
-      <v-layout>
+      <!-- <v-layout>
         <v-flex d-flex xs6 >
           <v-card>
             <v-card-text class="px-0">
@@ -149,9 +148,9 @@
         </v-flex>
       </v-layout>
 
-    </br>
+    </br> -->
     <v-layout>
-      <v-flex d-flex xs4 >
+      <v-flex d-flex xs12 >
         <v-card>
           <v-card-text class="px-0">
             <div >
@@ -162,13 +161,13 @@
           </v-card-text>
         </v-card>
       </v-flex>
-      <v-flex d-flex xs4 >
+      <!-- <v-flex d-flex xs4 >
         <v-card>
           <v-card-text class="px-0">
             <div>
               <h3 class="headline mb-0">Utilize</h3>
               <h3 class="headline mb-0">In</h3>
-              <div><h2 style="color:#ff6666">{{this.sumIn ? this.sumIn.toFixed(3) : 'N/A'}} %</h2></div>
+              <div><h2 style="color:#ff6666">{{value.utilizein ? value.utilizein.toFixed(3) : 'N/A'}} %</h2></div>
             </div>
           </v-card-text>
         </v-card>
@@ -179,15 +178,15 @@
             <div>
               <h3 class="headline mb-0">Utilize</h3>
               <h3 class="headline mb-0">Out</h3>
-              <div><h2 style="color:#ff6666">{{this.sumOut ? this.sumOut .toFixed(3) : 'N/A'}} %</h2></div>
+              <div><h2 style="color:#ff6666">{{value.utilizeout ? value.utilizeout.toFixed(3) : 'N/A'}} %</h2></div>
             </div>
           </v-card-text>
-        </v-card>
+        </v-card> -->
       </v-flex>
     </v-layout>
   </br>
 
-  <v-layout >
+  <!-- <v-layout >
     <v-flex d-flex xs12 >
       <v-card>
 
@@ -212,8 +211,8 @@
     </v-flex>
   </v-layout>
 
-</br>
-  <v-layout>
+</br> -->
+  <!-- <v-layout>
     <v-flex d-flex xs6 >
       <v-card>
       <v-card-text class="px-0">
@@ -225,7 +224,7 @@
               style="width: 150px;"
                 v-bind:items="items"
                 v-model="inbo"
-                :label="'Alert '+ nodeonline.limitin"
+                :label="'Alert '+ value.limitin"
                 single-line
                 bottom
               ></v-select></center>
@@ -247,7 +246,7 @@
                 style="width: 150px;"
                 v-bind:items="items"
                 v-model="outbo"
-                :label="'Alert '+ nodeonline.limitout"
+                :label="'Alert '+ value.limitout"
                 single-line
                 bottom
               ></v-select></center>
@@ -259,9 +258,9 @@
       </v-card>
     </v-flex>
   </v-layout>
-</br>
+</br> -->
 
-<div style="float:left;" v-if="datacollection">
+<!-- <div style="float:left;" v-if="datacollection">
 <h3 class="headline mb-0">Inbound / Outbound (Mb)</h3></br>
 <line-chart :chart-data="datacollection"
   :options="{responsive: true, maintainAspectRatio: false, elements: { point: { radius: 1 }
@@ -269,7 +268,7 @@
   :height="250"
   ></line-chart>
 </div>
-</br>
+</br> -->
 <div style="float:left;" v-if="datacollectionspeed">
 <h3 class="headline mb-0">Download / Upload (Mb/s)</h3></br>
 <line-chart :chart-data="datacollectionspeed"
@@ -283,7 +282,7 @@
 
 <script>
 import LineChart from './lineChart.js'
-import {Data, alive} from '@/components/firebase'
+import {Data} from '@/components/firebase'
 import firebase from 'firebase'
 export default {
   components: {
@@ -300,44 +299,16 @@ export default {
     await this.$bindAsArray('todos', Data, null, () => {
       // console.log(this.todos)
       var vm = this
-      let getData = this.todos.find(datas => datas.node === 'Node415')
+      let getData = this.todos.find(datas => datas.node === 'Node2')
       vm.value = getData
-      vm.valueInbound = Object.values(vm.value.inbound)  // แปลงจาก object เป็น array
-      vm.valueInbound = vm.valueInbound.map(data => data.value).reverse().slice(0, 12).reverse()
-      // console.log(vm.valueInbound)
-      vm.valueOutbound = Object.values(vm.value.outbound)
-      vm.valueOutbound = vm.valueOutbound.map(data => data.value).reverse().slice(0, 12).reverse()
-      vm.label = Object.values(vm.value.inbound)
-      vm.label = vm.label.map(data => data.time).reverse().slice(0, 12).reverse()
+      vm.valueInbound = vm.value.inbound.map(data => data.value).reverse().slice(0, 12).reverse()
+      vm.valueOutbound = vm.value.outbound.map(data => data.value).reverse().slice(0, 12).reverse()
+      vm.label = vm.value.inbound.map(data => data.time).reverse().slice(0, 12).reverse()
       // this.fillData()
-      vm.valueUp = Object.values(vm.value.speedtest)
-      vm.valueUp = vm.valueUp.map(data => data.valueup).reverse().slice(0, 12).reverse()
-      vm.valueDown = Object.values(vm.value.speedtest)
-      vm.valueDown = vm.valueDown.map(data => data.valuedown).reverse().slice(0, 12).reverse()
-      vm.speedlabel = Object.values(vm.value.speedtest)
-      vm.speedlabel = vm.speedlabel.map(data => data.time).reverse().slice(0, 12).reverse()
-      // calutilize
-      let inbound1 = 0
-      let inbound2 = 0
-      let outbound1 = 0
-      let outbound2 = 0
-      inbound1 = vm.valueInbound[vm.valueInbound.length - 1]
-      inbound2 = vm.valueInbound[vm.valueInbound.length - 2]
-      outbound1 = vm.valueOutbound[vm.valueOutbound.length - 1]
-      outbound2 = vm.valueOutbound[vm.valueOutbound.length - 2]
-      console.log(inbound1)
-      console.log(inbound2)
-      this.sumIn = (inbound2 - inbound1) * 100
-      this.sumOut = (outbound2 - outbound1) * 100
-      this.sumIn = this.sumIn / (60 * vm.value.sumInterface)
-      this.sumOut = this.sumOut / (60 * vm.value.sumInterface)
-      this.sumIn = Math.abs(this.sumIn)
-      this.sumOut = Math.abs(this.sumOut)
-      if (isNaN(this.sumIn)) this.sumIn = 0
-      if (isNaN(this.sumOut)) this.sumOut = 0
-      console.log(this.sumIn)
-      console.log(this.sumOut)
-      // end
+      vm.valueUp = vm.value.speedtest.map(data => data.valueup).reverse().slice(0, 12).reverse()
+      vm.valueDown = vm.value.speedtest.map(data => data.valuedown).reverse().slice(0, 12).reverse()
+      vm.speedlabel = vm.value.speedtest.map(data => data.time).reverse().slice(0, 12).reverse()
+      // this.fillDataspeed()
       var myarray = vm.valueUp
       vm.lasdown = myarray[myarray.length - 1]
       myarray = vm.valueDown
@@ -345,11 +316,7 @@ export default {
       this.fillData()
       this.fillDataspeed()
       this.check = 1
-      this.namenode = vm.value.node.substring(4)
       // this.$unbind('todos')
-    })
-    await this.$bindAsArray('todoscheck', alive, null, () => {
-      this.nodeonline = this.todoscheck.find(datas => datas.nodeName === 'Node415')
     })
   },
   data () {
@@ -375,13 +342,8 @@ export default {
       inbo: '',
       outbo: '',
       todos: '',
-      todoscheck: '',
       newdata: '',
-      check: '',
-      nodeonline: '',
-      namenode: '',
-      sumIn: '',
-      sumOut: ''
+      check: ''
     }
   },
   created () {
@@ -390,62 +352,35 @@ export default {
   watch: {
     todos: function (newval) {
       if (this.check === 1) {
+        // console.log(newval)
+        // this.$unbind('todos')
+        // this.newdata = newval
+        // setTimeout(function () {
+          // this.$bindAsArray('newdata', newval, null, () => {
+        // console.log('in')
+          // console.log(this.newdata)
         var vm = this
-        let getData = this.todos.find(datas => datas.node === 'Node415')
+        let getData = newval.find(datas => datas.node === 'Node2')
         vm.value = getData
-        vm.valueInbound = Object.values(vm.value.inbound)
-        vm.valueInbound = vm.valueInbound.map(data => data.value).reverse().slice(0, 12).reverse()
-        vm.valueOutbound = Object.values(vm.value.outbound)
-        vm.valueOutbound = vm.valueOutbound.map(data => data.value).reverse().slice(0, 12).reverse()
-        vm.label = Object.values(vm.value.inbound)
-        vm.label = vm.label.map(data => data.time).reverse().slice(0, 12).reverse()
-          // this.fillData()
-        vm.valueUp = Object.values(vm.value.speedtest)
-        vm.valueUp = vm.valueUp.map(data => data.valueup).reverse().slice(0, 12).reverse()
-        vm.valueDown = Object.values(vm.value.speedtest)
-        vm.valueDown = vm.valueDown.map(data => data.valuedown).reverse().slice(0, 12).reverse()
-        vm.speedlabel = Object.values(vm.value.speedtest)
-        vm.speedlabel = vm.speedlabel.map(data => data.time).reverse().slice(0, 12).reverse()
-        let inbound1 = 0
-        let inbound2 = 0
-        let outbound1 = 0
-        let outbound2 = 0
-        inbound1 = vm.valueInbound[vm.valueInbound.length - 1]
-        inbound2 = vm.valueInbound[vm.valueInbound.length - 2]
-        outbound1 = vm.valueOutbound[vm.valueOutbound.length - 1]
-        outbound2 = vm.valueOutbound[vm.valueOutbound.length - 2]
-        console.log(inbound1)
-        console.log(inbound2)
-        this.sumIn = (inbound2 - inbound1) * 100
-        this.sumOut = (outbound2 - outbound1) * 100
-        this.sumIn = this.sumIn / (60 * vm.value.sumInterface)
-        this.sumOut = this.sumOut / (60 * vm.value.sumInterface)
-        this.sumIn = Math.abs(this.sumIn)
-        this.sumOut = Math.abs(this.sumOut)
-        if (isNaN(this.sumIn)) this.sumIn = 0
-        if (isNaN(this.sumOut)) this.sumOut = 0
-        console.log(this.sumIn)
-        console.log(this.sumOut)
+        vm.valueInbound = vm.value.inbound.map(data => data.value).reverse().slice(0, 12).reverse()
+        vm.valueOutbound = vm.value.outbound.map(data => data.value).reverse().slice(0, 12).reverse()
+        vm.label = vm.value.inbound.map(data => data.time).reverse().slice(0, 12).reverse()
+            // this.fillData()
+        vm.valueUp = vm.value.speedtest.map(data => data.valueup).reverse().slice(0, 12).reverse()
+        vm.valueDown = vm.value.speedtest.map(data => data.valuedown).reverse().slice(0, 12).reverse()
+        vm.speedlabel = vm.value.speedtest.map(data => data.time).reverse().slice(0, 12).reverse()
+          // this.fillDataspeed()
         var myarray = vm.valueUp
-        vm.lasup = myarray[myarray.length - 1]
-        myarray = vm.valueDown
         vm.lasdown = myarray[myarray.length - 1]
-        this.fillData()
-        this.fillDataspeed()
+        myarray = vm.valueDown
+        vm.lasup = myarray[myarray.length - 1]
+        vm.fillData()
+        vm.fillDataspeed()
             // this.$unbind('todos')
           // })
         // }, 2000)
-        console.log('change')
       } else {
         console.log('nochange')
-      }
-    },
-    todoscheck: function (newval) {
-      if (this.check === 1) {
-        this.nodeonline = this.todoscheck.find(datas => datas.nodeName === 'Node415')
-        console.log('online-change')
-      } else {
-        console.log('online-nochange')
       }
     }
   },
@@ -483,24 +418,16 @@ export default {
       }
     },
     inboundLimit () {
-      // var key = this.dataTouse.find(datas => datas.node === 'Node415')
-      if (this.inbo !== '') {
-        firebase.database().ref('/alive/' + this.value['.key']).update({
-          limitin: this.inbo
-        })
-      } else {
-        console.log('epmtyinbo')
-      }
+      // var key = this.dataTouse.find(datas => datas.node === 'Node1')
+      firebase.database().ref('/db/' + this.value['.key']).update({
+        limitin: this.inbo
+      })
     },
     outboundLimit () {
-      // var key = this.dataTouse.find(datas => datas.node === 'Node415')
-      if (this.outbo !== '') {
-        firebase.database().ref('/alive/' + this.value['.key']).update({
-          limitout: this.outbo
-        })
-      } else {
-        console.log('epmtyoutbo')
-      }
+      // var key = this.dataTouse.find(datas => datas.node === 'Node1')
+      firebase.database().ref('/db/' + this.value['.key']).update({
+        limitout: this.outbo
+      })
     },
     signOut: function () {
       firebase.auth()
