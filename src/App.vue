@@ -11,7 +11,7 @@
         <v-list dense>
           <v-list-tile >
             <v-list-tile-action>
-              <v-icon>Node</v-icon>
+      <div style="font-size:3em; color:Tomato"><i class="fab fa-nintendo-switch fa-sm"></i></div>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>
@@ -22,7 +22,7 @@
 
           <v-list-tile >
             <v-list-tile-action>
-              <v-icon>Node</v-icon>
+                <div style="font-size:3em; color:Tomato"><i class="fab fa-nintendo-switch fa-sm"></i></div>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>
@@ -33,7 +33,7 @@
 
           <v-list-tile >
             <v-list-tile-action>
-              <v-icon>Node</v-icon>
+                <div style="font-size:3em; color:Tomato"><i class="fab fa-nintendo-switch fa-sm"></i></div>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>
@@ -44,7 +44,7 @@
 
           <v-list-tile >
             <v-list-tile-action>
-              <v-icon>Node</v-icon>
+                <div style="font-size:3em; color:Tomato"><i class="fab fa-nintendo-switch fa-sm"></i></div>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>
@@ -55,7 +55,7 @@
 
           <v-list-tile >
             <v-list-tile-action>
-              <v-icon>Node</v-icon>
+                <div style="font-size:3em; color:Tomato"><i class="fab fa-nintendo-switch fa-sm"></i></div>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>
@@ -66,7 +66,7 @@
 
           <v-list-tile >
             <v-list-tile-action>
-              <v-icon>Node</v-icon>
+                <div style="font-size:3em; color:Tomato"><i class="fab fa-nintendo-switch fa-sm"></i></div>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>
@@ -77,7 +77,7 @@
 
           <v-list-tile >
             <v-list-tile-action>
-              <v-icon>Node</v-icon>
+                <div style="font-size:3em; color:Tomato"><i class="fab fa-nintendo-switch fa-sm"></i></div>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>
@@ -88,7 +88,7 @@
 
           <v-list-tile >
             <v-list-tile-action>
-              <v-icon>Node</v-icon>
+                <div style="font-size:3em; color:Tomato"><i class="fab fa-nintendo-switch fa-sm"></i></div>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>
@@ -99,7 +99,7 @@
 
           <v-list-tile >
             <v-list-tile-action>
-              <v-icon>Node</v-icon>
+                <div style="font-size:3em; color:Tomato"><i class="fab fa-nintendo-switch fa-sm"></i></div>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>
@@ -110,7 +110,7 @@
 
           <v-list-tile >
             <v-list-tile-action>
-              <v-icon>Node</v-icon>
+                <div style="font-size:3em; color:Tomato"><i class="fab fa-nintendo-switch fa-sm"></i></div>
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>

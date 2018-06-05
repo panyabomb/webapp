@@ -300,7 +300,7 @@ export default {
     await this.$bindAsArray('todos', Data, null, () => {
       // console.log(this.todos)
       var vm = this
-      let getData = this.todos.find(datas => datas.node === 'Node415')
+      let getData = this.todos.find(datas => datas.node === 'NodeRouter')
       vm.value = getData
       vm.valueInbound = Object.values(vm.value.inbound)  // แปลงจาก object เป็น array
       vm.valueInbound = vm.valueInbound.map(data => data.value).reverse().slice(0, 12).reverse()
@@ -349,7 +349,7 @@ export default {
       // this.$unbind('todos')
     })
     await this.$bindAsArray('todoscheck', alive, null, () => {
-      this.nodeonline = this.todoscheck.find(datas => datas.nodeName === 'Node415')
+      this.nodeonline = this.todoscheck.find(datas => datas.nodeName === 'NodeRouter')
     })
   },
   data () {
@@ -391,7 +391,7 @@ export default {
     todos: function (newval) {
       if (this.check === 1) {
         var vm = this
-        let getData = this.todos.find(datas => datas.node === 'Node415')
+        let getData = this.todos.find(datas => datas.node === 'NodeRouter')
         vm.value = getData
         vm.valueInbound = Object.values(vm.value.inbound)
         vm.valueInbound = vm.valueInbound.map(data => data.value).reverse().slice(0, 12).reverse()
@@ -442,7 +442,7 @@ export default {
     },
     todoscheck: function (newval) {
       if (this.check === 1) {
-        this.nodeonline = this.todoscheck.find(datas => datas.nodeName === 'Node415')
+        this.nodeonline = this.todoscheck.find(datas => datas.nodeName === 'NodeRouter')
         console.log('online-change')
       } else {
         console.log('online-nochange')
@@ -483,7 +483,7 @@ export default {
       }
     },
     inboundLimit () {
-      // var key = this.dataTouse.find(datas => datas.node === 'Node415')
+      // var key = this.dataTouse.find(datas => datas.node === 'NodeRouter')
       if (this.inbo !== '') {
         firebase.database().ref('/alive/' + this.value['.key']).update({
           limitin: this.inbo
@@ -493,7 +493,7 @@ export default {
       }
     },
     outboundLimit () {
-      // var key = this.dataTouse.find(datas => datas.node === 'Node415')
+      // var key = this.dataTouse.find(datas => datas.node === 'NodeRouter')
       if (this.outbo !== '') {
         firebase.database().ref('/alive/' + this.value['.key']).update({
           limitout: this.outbo

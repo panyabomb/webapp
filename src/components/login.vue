@@ -1,16 +1,16 @@
 <template>
-
     <v-content>
-      <v-container >
+      <!-- <v-container> -->
         <v-layout align-center justify-center>
           <v-flex xs12 sm8 md4>
             <v-card class="elevation-12">
               <v-toolbar dark color="cyan">
                 <v-toolbar-title>Fitm Monitoring Login</v-toolbar-title>
-                <v-spacer></v-spacer>
-
+                <!-- <v-spacer></v-spacer> -->
                 </v-tooltip>
-              </v-toolbar>
+              </v-toolbar><br>
+              <v-card-media src="/static/FITM.png" height="180px" contain>
+              </v-card-media>
               <v-card-text>
                 <v-form>
                   <v-text-field prepend-icon="person" v-model="email" name="login" label="Login" type="email" @keyup.enter.native="signIn()"></v-text-field>
@@ -25,7 +25,7 @@
             </v-card>
           </v-flex>
         </v-layout>
-      </v-container>
+      <!-- </v-container> -->
     </v-content>
 
 </template>
