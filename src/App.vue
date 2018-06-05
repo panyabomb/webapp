@@ -15,7 +15,7 @@
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>
-                <router-link to="/home" style="text-decoration:none" ><h3 @click="closedrawer">Sw415</h3></router-link>
+                <router-link to="/Node415" style="text-decoration:none" ><h3 @click="closedrawer">Sw415</h3></router-link>
               </v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
@@ -26,7 +26,7 @@
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>
-                <router-link to="/node2"style="text-decoration:none"><h3 @click="closedrawer">Sw4503</h3></router-link>
+                <router-link to="/Node4503"style="text-decoration:none"><h3 @click="closedrawer">Sw4503</h3></router-link>
               </v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
@@ -37,7 +37,84 @@
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>
-                <router-link to="/node3"style="text-decoration:none"><h3 @click="closedrawer">Node3</h3></router-link>
+                <router-link to="/Node3850"style="text-decoration:none"><h3 @click="closedrawer">Sw3850</h3></router-link>
+              </v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+
+          <v-list-tile >
+            <v-list-tile-action>
+              <v-icon>Node</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>
+                <router-link to="/Node101C"style="text-decoration:none"><h3 @click="closedrawer">Sw101C</h3></router-link>
+              </v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+
+          <v-list-tile >
+            <v-list-tile-action>
+              <v-icon>Node</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>
+                <router-link to="/Node124"style="text-decoration:none"><h3 @click="closedrawer">Sw124</h3></router-link>
+              </v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+
+          <v-list-tile >
+            <v-list-tile-action>
+              <v-icon>Node</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>
+                <router-link to="/Node330A"style="text-decoration:none"><h3 @click="closedrawer">Sw330A</h3></router-link>
+              </v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+
+          <v-list-tile >
+            <v-list-tile-action>
+              <v-icon>Node</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>
+                <router-link to="/Nodeshop"style="text-decoration:none"><h3 @click="closedrawer">Swshop</h3></router-link>
+              </v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+
+          <v-list-tile >
+            <v-list-tile-action>
+              <v-icon>Node</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>
+                <router-link to="/NodePsad"style="text-decoration:none"><h3 @click="closedrawer">Sw พวงแสด</h3></router-link>
+              </v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+
+          <v-list-tile >
+            <v-list-tile-action>
+              <v-icon>Node</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>
+                <router-link to="/NodeRouter"style="text-decoration:none"><h3 @click="closedrawer">Router</h3></router-link>
+              </v-list-tile-title>
+            </v-list-tile-content>
+          </v-list-tile>
+
+          <v-list-tile >
+            <v-list-tile-action>
+              <v-icon>Node</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+              <v-list-tile-title>
+                <router-link to="/node3"style="text-decoration:none"><h3 @click="closedrawer">Node Unmanage</h3></router-link>
               </v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>

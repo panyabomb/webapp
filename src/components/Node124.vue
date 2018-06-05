@@ -3,10 +3,9 @@
       <v-layout>
         <v-flex d-flex xs12 >
           <v-card color="blue-grey darken-2" class="white--text" >
-            <v-card-title primary-title >
+            <v-card-title primary-title>
               <!-- <btn class="button" v-on:click="signOut" v-if="user">Sign-out</btn> -->
               <div>
-                <h2 class="headline mb-1">Unmanaged</h2>
                 <h2 class="headline mb-1">Node</h2>
                 <h2 class="headline mb-1">{{namenode}}</h2>
               </div>
@@ -45,6 +44,41 @@
           </v-card>
         </v-flex>
       </v-layout>
+</br>
+<v-layout>
+  <v-flex d-flex xs4 >
+    <v-card>
+        <v-card-text class="px-0">
+        <div>
+          <h3 class="headline mb-0">CPU Usage</h3>
+
+          <div><h2 style="color:#ff6666" >{{value.cpu}} %</h2></div>
+        </div>
+      </v-card-text>
+
+    </v-card>
+  </v-flex>
+  <v-flex d-flex xs4 >
+    <v-card>
+      <v-card-text class="px-0">
+        <div>
+          <h3 class="headline mb-0">Memory Used</h3>
+          <div><h2 style="color:#ff6666">{{value.memory ? value.memory.toFixed(3) : 'N/A'}} %</h2></div>
+        </div>
+      </v-card-text>
+    </v-card>
+  </v-flex>
+  <v-flex d-flex xs4 >
+    <v-card>
+      <v-card-text class="px-0">
+        <div>
+          <h3 class="headline mb-0">Temp</h3>
+          <div><h2 style="color:#ff6666" v-if="value.temparature">{{value.temparature.valueswtemp}} °C</h2></div>
+        </div>
+    </v-card-text>
+    </v-card>
+  </v-flex>
+</v-layout>
 </br>
       <v-layout>
       <v-flex d-flex xs6 >
@@ -134,7 +168,7 @@
             <div>
               <h3 class="headline mb-0">Utilize</h3>
               <h3 class="headline mb-0">In</h3>
-              <div><h2 style="color:#ff6666">{{this.sumIn ? this.sumIn.toFixed(3) : '0'}} %</h2></div>
+              <div><h2 style="color:#ff6666">{{this.sumIn ? this.sumIn.toFixed(3) : 'N/A'}} %</h2></div>
             </div>
           </v-card-text>
         </v-card>
@@ -145,7 +179,7 @@
             <div>
               <h3 class="headline mb-0">Utilize</h3>
               <h3 class="headline mb-0">Out</h3>
-              <div><h2 style="color:#ff6666">{{this.sumOut ? this.sumOut .toFixed(3) : '0'}} %</h2></div>
+              <div><h2 style="color:#ff6666">{{this.sumOut ? this.sumOut .toFixed(3) : 'N/A'}} %</h2></div>
             </div>
           </v-card-text>
         </v-card>
@@ -157,7 +191,7 @@
     <v-flex d-flex xs12 >
       <v-card>
 
-           <!-- <v-card-text class="px-0">
+           <v-card-text class="px-0">
             <h3 class="headline mb-0">Main Link</h3></br>
             <div>
               <v-layout>
@@ -172,7 +206,7 @@
                   </v-layout>
           </div>
         </div>
-        </v-card-text> -->
+        </v-card-text>
 
       </v-card>
     </v-flex>
@@ -266,7 +300,7 @@ export default {
     await this.$bindAsArray('todos', Data, null, () => {
       // console.log(this.todos)
       var vm = this
-      let getData = this.todos.find(datas => datas.node === 'Node3')
+      let getData = this.todos.find(datas => datas.node === 'Node124')
       vm.value = getData
       vm.valueInbound = Object.values(vm.value.inbound)  // แปลงจาก object เป็น array
       vm.valueInbound = vm.valueInbound.map(data => data.value).reverse().slice(0, 12).reverse()
@@ -315,7 +349,7 @@ export default {
       // this.$unbind('todos')
     })
     await this.$bindAsArray('todoscheck', alive, null, () => {
-      this.nodeonline = this.todoscheck.find(datas => datas.nodeName === 'Node3')
+      this.nodeonline = this.todoscheck.find(datas => datas.nodeName === 'Node124')
     })
   },
   data () {
@@ -357,7 +391,7 @@ export default {
     todos: function (newval) {
       if (this.check === 1) {
         var vm = this
-        let getData = this.todos.find(datas => datas.node === 'Node3')
+        let getData = this.todos.find(datas => datas.node === 'Node124')
         vm.value = getData
         vm.valueInbound = Object.values(vm.value.inbound)
         vm.valueInbound = vm.valueInbound.map(data => data.value).reverse().slice(0, 12).reverse()
@@ -408,7 +442,7 @@ export default {
     },
     todoscheck: function (newval) {
       if (this.check === 1) {
-        this.nodeonline = this.todoscheck.find(datas => datas.nodeName === 'Node3')
+        this.nodeonline = this.todoscheck.find(datas => datas.nodeName === 'Node124')
         console.log('online-change')
       } else {
         console.log('online-nochange')
@@ -449,7 +483,7 @@ export default {
       }
     },
     inboundLimit () {
-      // var key = this.dataTouse.find(datas => datas.node === 'Node3')
+      // var key = this.dataTouse.find(datas => datas.node === 'Node124')
       if (this.inbo !== '') {
         firebase.database().ref('/alive/' + this.value['.key']).update({
           limitin: this.inbo
@@ -459,7 +493,7 @@ export default {
       }
     },
     outboundLimit () {
-      // var key = this.dataTouse.find(datas => datas.node === 'Node3')
+      // var key = this.dataTouse.find(datas => datas.node === 'Node124')
       if (this.outbo !== '') {
         firebase.database().ref('/alive/' + this.value['.key']).update({
           limitout: this.outbo

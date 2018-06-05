@@ -168,7 +168,7 @@
             <div>
               <h3 class="headline mb-0">Utilize</h3>
               <h3 class="headline mb-0">In</h3>
-              <div><h2 style="color:#ff6666">{{value.utilizein ? value.utilizein.toFixed(3) : 'N/A'}} %</h2></div>
+              <div><h2 style="color:#ff6666">{{this.sumIn ? this.sumIn.toFixed(3) : 'N/A'}} %</h2></div>
             </div>
           </v-card-text>
         </v-card>
@@ -179,7 +179,7 @@
             <div>
               <h3 class="headline mb-0">Utilize</h3>
               <h3 class="headline mb-0">Out</h3>
-              <div><h2 style="color:#ff6666">{{value.utilizeout ? value.utilizeout.toFixed(3) : 'N/A'}} %</h2></div>
+              <div><h2 style="color:#ff6666">{{this.sumOut ? this.sumOut .toFixed(3) : 'N/A'}} %</h2></div>
             </div>
           </v-card-text>
         </v-card>
@@ -300,7 +300,7 @@ export default {
     await this.$bindAsArray('todos', Data, null, () => {
       // console.log(this.todos)
       var vm = this
-      let getData = this.todos.find(datas => datas.node === 'Node4503')
+      let getData = this.todos.find(datas => datas.node === 'Node101C')
       vm.value = getData
       vm.valueInbound = Object.values(vm.value.inbound)  // แปลงจาก object เป็น array
       vm.valueInbound = vm.valueInbound.map(data => data.value).reverse().slice(0, 12).reverse()
@@ -317,24 +317,26 @@ export default {
       vm.speedlabel = Object.values(vm.value.speedtest)
       vm.speedlabel = vm.speedlabel.map(data => data.time).reverse().slice(0, 12).reverse()
       // calutilize
-      // let inbound1 = 0
-      // let inbound2 = 0
-      // let outbound1 = 0
-      // let outbound2 = 0
-      // inbound1 = vm.valueInbound[vm.valueInbound.length - 1]
-      // inbound2 = vm.valueInbound[vm.valueInbound.length - 2]
-      // outbound1 = vm.valueOutbound[vm.valueOutbound.length - 1]
-      // outbound2 = vm.valueOutbound[vm.valueOutbound.length - 2]
-      // console.log(inbound1)
-      // console.log(inbound2)
-      // let sumIn = (inbound2 - inbound1) * 100
-      // let sumOut = (outbound2 - outbound1) * 100
-      // sumIn = sumIn / (60 * sumInterface)
-      // sumOut = sumOut / (60 * sumInterface)
-      // sumIn = Math.abs(sumIn)
-      // sumOut = Math.abs(sumOut)
-      // if (isNaN(sumIn)) sumIn = 0
-      // if (isNaN(sumOut)) sumOut = 0
+      let inbound1 = 0
+      let inbound2 = 0
+      let outbound1 = 0
+      let outbound2 = 0
+      inbound1 = vm.valueInbound[vm.valueInbound.length - 1]
+      inbound2 = vm.valueInbound[vm.valueInbound.length - 2]
+      outbound1 = vm.valueOutbound[vm.valueOutbound.length - 1]
+      outbound2 = vm.valueOutbound[vm.valueOutbound.length - 2]
+      console.log(inbound1)
+      console.log(inbound2)
+      this.sumIn = (inbound2 - inbound1) * 100
+      this.sumOut = (outbound2 - outbound1) * 100
+      this.sumIn = this.sumIn / (60 * vm.value.sumInterface)
+      this.sumOut = this.sumOut / (60 * vm.value.sumInterface)
+      this.sumIn = Math.abs(this.sumIn)
+      this.sumOut = Math.abs(this.sumOut)
+      if (isNaN(this.sumIn)) this.sumIn = 0
+      if (isNaN(this.sumOut)) this.sumOut = 0
+      console.log(this.sumIn)
+      console.log(this.sumOut)
       // end
       var myarray = vm.valueUp
       vm.lasdown = myarray[myarray.length - 1]
@@ -347,13 +349,12 @@ export default {
       // this.$unbind('todos')
     })
     await this.$bindAsArray('todoscheck', alive, null, () => {
-      this.nodeonline = this.todoscheck.find(datas => datas.nodeName === 'Node4503')
+      this.nodeonline = this.todoscheck.find(datas => datas.nodeName === 'Node101C')
     })
   },
   data () {
     return {
       nameau: '',
-      namenode: '',
       datacollection: null,
       datacollectionspeed: null,
       drawer: false,
@@ -377,7 +378,10 @@ export default {
       todoscheck: '',
       newdata: '',
       check: '',
-      nodeonline: ''
+      nodeonline: '',
+      namenode: '',
+      sumIn: '',
+      sumOut: ''
     }
   },
   created () {
@@ -387,7 +391,7 @@ export default {
     todos: function (newval) {
       if (this.check === 1) {
         var vm = this
-        let getData = this.todos.find(datas => datas.node === 'Node4503')
+        let getData = this.todos.find(datas => datas.node === 'Node101C')
         vm.value = getData
         vm.valueInbound = Object.values(vm.value.inbound)
         vm.valueInbound = vm.valueInbound.map(data => data.value).reverse().slice(0, 12).reverse()
@@ -402,6 +406,26 @@ export default {
         vm.valueDown = vm.valueDown.map(data => data.valuedown).reverse().slice(0, 12).reverse()
         vm.speedlabel = Object.values(vm.value.speedtest)
         vm.speedlabel = vm.speedlabel.map(data => data.time).reverse().slice(0, 12).reverse()
+        let inbound1 = 0
+        let inbound2 = 0
+        let outbound1 = 0
+        let outbound2 = 0
+        inbound1 = vm.valueInbound[vm.valueInbound.length - 1]
+        inbound2 = vm.valueInbound[vm.valueInbound.length - 2]
+        outbound1 = vm.valueOutbound[vm.valueOutbound.length - 1]
+        outbound2 = vm.valueOutbound[vm.valueOutbound.length - 2]
+        console.log(inbound1)
+        console.log(inbound2)
+        this.sumIn = (inbound2 - inbound1) * 100
+        this.sumOut = (outbound2 - outbound1) * 100
+        this.sumIn = this.sumIn / (60 * vm.value.sumInterface)
+        this.sumOut = this.sumOut / (60 * vm.value.sumInterface)
+        this.sumIn = Math.abs(this.sumIn)
+        this.sumOut = Math.abs(this.sumOut)
+        if (isNaN(this.sumIn)) this.sumIn = 0
+        if (isNaN(this.sumOut)) this.sumOut = 0
+        console.log(this.sumIn)
+        console.log(this.sumOut)
         var myarray = vm.valueUp
         vm.lasup = myarray[myarray.length - 1]
         myarray = vm.valueDown
@@ -418,7 +442,7 @@ export default {
     },
     todoscheck: function (newval) {
       if (this.check === 1) {
-        this.nodeonline = this.todoscheck.find(datas => datas.nodeName === 'Node4503')
+        this.nodeonline = this.todoscheck.find(datas => datas.nodeName === 'Node101C')
         console.log('online-change')
       } else {
         console.log('online-nochange')
@@ -459,7 +483,7 @@ export default {
       }
     },
     inboundLimit () {
-      // var key = this.dataTouse.find(datas => datas.node === 'Node1')
+      // var key = this.dataTouse.find(datas => datas.node === 'Node101C')
       if (this.inbo !== '') {
         firebase.database().ref('/alive/' + this.value['.key']).update({
           limitin: this.inbo
@@ -469,7 +493,7 @@ export default {
       }
     },
     outboundLimit () {
-      // var key = this.dataTouse.find(datas => datas.node === 'Node1')
+      // var key = this.dataTouse.find(datas => datas.node === 'Node101C')
       if (this.outbo !== '') {
         firebase.database().ref('/alive/' + this.value['.key']).update({
           limitout: this.outbo
