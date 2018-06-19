@@ -48,17 +48,6 @@
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>
-                <router-link to="/Node101C"style="text-decoration:none"><h3 @click="closedrawer">Sw101C</h3></router-link>
-              </v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-
-          <v-list-tile >
-            <v-list-tile-action>
-                <div style="font-size:3em; color:Tomato"><i class="fab fa-nintendo-switch fa-sm"></i></div>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>
                 <router-link to="/Node124"style="text-decoration:none"><h3 @click="closedrawer">Sw124</h3></router-link>
               </v-list-tile-title>
             </v-list-tile-content>
@@ -70,7 +59,7 @@
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>
-                <router-link to="/Node330A"style="text-decoration:none"><h3 @click="closedrawer">Sw330A</h3></router-link>
+                <router-link to="/Node330A"style="text-decoration:none"><h3 @click="closedrawer">Sw330</h3></router-link>
               </v-list-tile-title>
             </v-list-tile-content>
           </v-list-tile>
@@ -103,17 +92,6 @@
             </v-list-tile-action>
             <v-list-tile-content>
               <v-list-tile-title>
-                <router-link to="/NodeRouter"style="text-decoration:none"><h3 @click="closedrawer">Router</h3></router-link>
-              </v-list-tile-title>
-            </v-list-tile-content>
-          </v-list-tile>
-
-          <v-list-tile >
-            <v-list-tile-action>
-                <div style="font-size:3em; color:Tomato"><i class="fab fa-nintendo-switch fa-sm"></i></div>
-            </v-list-tile-action>
-            <v-list-tile-content>
-              <v-list-tile-title>
                 <router-link to="/node3"style="text-decoration:none"><h3 @click="closedrawer">Node Unmanage</h3></router-link>
               </v-list-tile-title>
             </v-list-tile-content>
@@ -130,15 +108,15 @@
         <v-spacer></v-spacer>
 
         <iframe src="https://free.timeanddate.com/clock/i61l0dq7/n28/fn16/fs16/fcfff/tct/pct/tt1/tw0" frameborder="0" width="146" height="21" allowTransparency="true" class="not-active"></iframe>
-        <v-btn icon v-on:click="signOut" v-if="this.logoutcheck">
-        <v-icon>arrow_back</v-icon>
+        <v-btn color="orange darken-2" dark v-on:click="signOut" v-if="this.logoutcheck">
+        Logout
         </v-btn>
       </v-toolbar>
       <v-container>
 <router-view></router-view>
 </v-container>
       <v-footer color="cyan" app>
-        <span class="white--text">&copy; wipoo + panya 2018 ver 11.2</span>
+        <span class="white--text">&copy; FITM 2018</span>
       </v-footer>
     </v-app>
 
@@ -159,6 +137,7 @@ export default {
   },
   created () {
     window.scrollTo(0, 0)
+    this.$router.replace('/Node415')
   },
   mounted () {
     console.log(firebase.auth().currentUser.email)

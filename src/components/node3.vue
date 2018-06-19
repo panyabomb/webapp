@@ -3,12 +3,11 @@
       <v-layout>
         <v-flex d-flex xs12 >
           <v-card color="blue-grey darken-2" class="white--text" >
-            <v-card-title primary-title >
+            <v-card-title primary-title>
               <!-- <btn class="button" v-on:click="signOut" v-if="user">Sign-out</btn> -->
               <div>
-                <h2 class="headline mb-1">Unmanaged</h2>
                 <h2 class="headline mb-1">Node</h2>
-                <h2 class="headline mb-1">{{namenode}}</h2>
+                <h2 class="headline mb-1">Unmanaged</h2>
               </div>
             </v-card-title>
           </v-card>
@@ -30,9 +29,32 @@
             </v-card-title>
           </v-card>
         </v-flex>
+ <!-- showdialog ip  -->
+        <div v-if="dialog">
+          <v-layout row justify-center >
+    <v-dialog v-model="dialog" scrollable max-width="300px" persistent>
+      <v-card>
+        <v-card-title class="headline">IP List</v-card-title>
+
+        <v-divider></v-divider>
+        <v-card-text style="height: 300px;">
+          <div v-for="(item, index) in value.iplist">
+            <v-card-text class="title" style="color:#ff6666">{{item}}</v-card-text>
+          </div>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" flat @click.native="dialog = false, startscrolling()">Close</v-btn>
+          <v-spacer></v-spacer>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-layout>
+        </div>
 
         <v-flex d-flex xs6 >
-          <v-card>
+          <v-card @click.native.stop="dialog = true, stopscrolling()" :hover='true'>
             <v-card-text class="px-0">
               <div>
                 <h3 class="headline mb-0">Connected</h3>
@@ -134,7 +156,7 @@
             <div>
               <h3 class="headline mb-0">Utilize</h3>
               <h3 class="headline mb-0">In</h3>
-              <div><h2 style="color:#ff6666">{{this.sumIn ? this.sumIn.toFixed(3) : '0'}} %</h2></div>
+              <div><h2 style="color:#ff6666">{{this.sumIn ? this.sumIn.toFixed(3) : 'N/A'}} %</h2></div>
             </div>
           </v-card-text>
         </v-card>
@@ -145,38 +167,12 @@
             <div>
               <h3 class="headline mb-0">Utilize</h3>
               <h3 class="headline mb-0">Out</h3>
-              <div><h2 style="color:#ff6666">{{this.sumOut ? this.sumOut .toFixed(3) : '0'}} %</h2></div>
+              <div><h2 style="color:#ff6666">{{this.sumOut ? this.sumOut .toFixed(3) : 'N/A'}} %</h2></div>
             </div>
           </v-card-text>
         </v-card>
       </v-flex>
     </v-layout>
-  </br>
-
-  <v-layout >
-    <v-flex d-flex xs12 >
-      <v-card>
-
-           <!-- <v-card-text class="px-0">
-            <h3 class="headline mb-0">Main Link</h3></br>
-            <div>
-              <v-layout>
-                <v-flex d-flex xs6 >
-                  <i class="fas fa-download" style="font-size:3em; color:green "></i>
-                  <h2 style="color:green" v-if="value.mainlink">{{value.mainlink.in}} Mb</h2>
-                  </v-flex>
-                  <v-flex d-flex xs6 >
-                    <i class="fas fa-upload" style="font-size:3em; color:Tomato "></i>
-                    <h2 style="color:#ff6666" v-if="value.mainlink">{{value.mainlink.out}} Mb</h2>
-                    </v-flex>
-                  </v-layout>
-          </div>
-        </div>
-        </v-card-text> -->
-
-      </v-card>
-    </v-flex>
-  </v-layout>
 
 </br>
   <v-layout>
@@ -321,6 +317,7 @@ export default {
   data () {
     return {
       nameau: '',
+      dialog: false,
       datacollection: null,
       datacollectionspeed: null,
       drawer: false,
@@ -448,6 +445,20 @@ export default {
         ]
       }
     },
+    stopscrolling () {
+      if (/Android|webOS|iPhone|iPad|BlackBerry|Windows Phone|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent)) {
+        document.documentElement.style.overflow = 'hidden'
+        document.documentElement.style.position = 'fixed'
+      } else {
+        document.documentElement.style.overflow = 'hidden'
+      }
+      console.log('lockscrolling')
+    },
+    startscrolling () {
+      document.documentElement.style.overflow = 'scroll'
+      document.documentElement.style.position = 'static'
+      console.log('startcrolling')
+    },
     inboundLimit () {
       // var key = this.dataTouse.find(datas => datas.node === 'Node3')
       if (this.inbo !== '') {
@@ -483,4 +494,7 @@ export default {
     max-width: 600px;
     margin:  150px auto;
   }
+  html, body {
+  overflow: scroll;
+}
 </style>

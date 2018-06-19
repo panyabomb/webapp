@@ -14,7 +14,7 @@
         </v-flex>
 
         <v-flex d-flex xs6 >
-          <v-card color="green" class="white--text" v-if="nodeonline.alive2">
+          <v-card color="green" class="white--text" v-if="nodetoponline">
             <v-card-title primary-title>
               <div>
                 <h2 class="headline mb-0">Online</h2>
@@ -34,20 +34,13 @@
           <v-layout row justify-center >
     <v-dialog v-model="dialog" scrollable max-width="300px" persistent>
       <v-card>
-        <v-card-title class="headline">IP น๊ะจ๊ะ อั๊ยยะ เช่ยยยยๆๆ</v-card-title>
+        <v-card-title class="headline">IP List</v-card-title>
+
         <v-divider></v-divider>
         <v-card-text style="height: 300px;">
-          <v-card-text class="title" style="color:#ff6666">IP 192.168.1.1</v-card-text>
-          <v-card-text class="title" style="color:#ff6666">IP 192.168.1.2</v-card-text>
-          <v-card-text class="title" style="color:#ff6666">IP 192.168.1.3</v-card-text>
-          <v-card-text class="title" style="color:#ff6666">IP 192.168.1.5</v-card-text>
-          <v-card-text class="title" style="color:#ff6666">IP 192.168.1.6</v-card-text>
-          <v-card-text class="title" style="color:#ff6666">IP 192.168.1.7</v-card-text>
-          <v-card-text class="title" style="color:#ff6666">IP 192.168.1.8</v-card-text>
-          <v-card-text class="title" style="color:#ff6666">IP 192.168.1.9</v-card-text>
-          <v-card-text class="title" style="color:#ff6666">IP 192.168.1.10</v-card-text>
-          <v-card-text class="title" style="color:#ff6666">IP 192.168.1.134</v-card-text>
-          <v-card-text class="title" style="color:#ff6666">IP 192.168.1.555</v-card-text>
+          <div v-for="(item, index) in value.iplist">
+            <v-card-text class="title" style="color:#ff6666">{{item}}</v-card-text>
+          </div>
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions>
@@ -62,7 +55,7 @@
 
         <v-flex d-flex xs6 >
           <v-card @click.native.stop="dialog = true, stopscrolling()" :hover='true'>
-            <v-card-text class="px-0">
+            <v-card-text class="px-0" v-if="nodeonline.alive2">
               <div>
                 <h3 class="headline mb-0">Connected</h3>
                 <div><h1>{{value.onlinenow}}</h1></div>
@@ -82,7 +75,7 @@
         <div>
           <h3 class="headline mb-0">CPU Usage</h3>
 
-          <div><h2 style="color:#ff6666" >{{value.cpu}} %</h2></div>
+          <div><h2 style="color:#ff6666" v-if="nodeonline.alive2">{{value.cpu}} %</h2></div>
         </div>
       </v-card-text>
 
@@ -93,7 +86,7 @@
       <v-card-text class="px-0">
         <div>
           <h3 class="headline mb-0">Memory Used</h3>
-          <div><h2 style="color:#ff6666">{{value.memory ? value.memory.toFixed(3) : 'N/A'}} %</h2></div>
+          <div><h2 style="color:#ff6666" v-if="nodeonline.alive2">{{value.memory ? value.memory.toFixed(3) : 'N/A'}} %</h2></div>
         </div>
       </v-card-text>
     </v-card>
@@ -103,7 +96,7 @@
       <v-card-text class="px-0">
         <div>
           <h3 class="headline mb-0">Temp</h3>
-          <div><h2 style="color:#ff6666" v-if="value.temparature">{{value.temparature.valueswtemp}} °C</h2></div>
+          <div v-if="nodeonline.alive2"><h2 style="color:#ff6666" v-if="value.temparature">{{value.temparature.valueswtemp}} °C</h2></div>
         </div>
     </v-card-text>
     </v-card>
@@ -116,7 +109,7 @@
           <v-card-text class="px-0">
             <div>
               <h3 class="headline mb-0">Download</h3>
-              <div >
+              <div v-if="nodeonline.alive2">
                 <v-progress-circular
                   v-bind:size="100"
                   v-bind:width="15"
@@ -137,7 +130,7 @@
         <v-card-text class="px-0">
             <div>
               <h3 class="headline mb-0">Upload</h3>
-              <div >
+              <div v-if="nodeonline.alive2">
                 <v-progress-circular
                   v-bind:size="100"
                   v-bind:width="15"
@@ -161,7 +154,7 @@
               <div>
                 <h3 class="headline mb-0">Humidity</h3>
                 <h3 class="headline mb-0">Room</h3>
-                <div><h2 style="color:#ff6666" v-if="value.temparature">{{value.temparature.valueh >= 0 ? value.temparature.valueh : 'N/A'}} %</h2></div>
+                <div v-if="nodeonline.alive2"><h2 style="color:#ff6666" v-if="value.temparature">{{value.temparature.valueh >= 0 ? value.temparature.valueh : 'N/A'}} %</h2></div>
               </div>
             </v-card-text>
           </v-card>
@@ -172,7 +165,7 @@
               <div>
                 <h3 class="headline mb-0">Temperature</h3>
                 <h3 class="headline mb-0">Room</h3>
-                <div><h2 style="color:#ff6666" v-if="value.temparature">{{value.temparature.valuet != 'Wrong' ? value.temparature.valuet : 'N/A'}} °C</h2></div>
+                <div v-if="nodeonline.alive2"><h2 style="color:#ff6666" v-if="value.temparature">{{value.temparature.valuet != 'Wrong' ? value.temparature.valuet : 'N/A'}} °C</h2></div>
               </div>
             </v-card-text>
           </v-card>
@@ -187,7 +180,7 @@
             <div >
               <h3 class="headline mb-0">Packet</h3>
               <h3 class="headline mb-0">loss</h3>
-            <div><h2 style="color:#ff6666" >{{parseInt(value.packetloss)}} %</h2></div>
+            <div v-if="nodeonline.alive2"><h2 style="color:#ff6666" >{{parseInt(value.packetloss)}} %</h2></div>
             </div>
           </v-card-text>
         </v-card>
@@ -198,7 +191,7 @@
             <div>
               <h3 class="headline mb-0">Utilize</h3>
               <h3 class="headline mb-0">In</h3>
-              <div><h2 style="color:#ff6666">{{this.sumIn ? this.sumIn.toFixed(3) : 'N/A'}} %</h2></div>
+              <div v-if="nodeonline.alive2"><h2 style="color:#ff6666">{{this.sumIn ? this.sumIn.toFixed(3) : 'N/A'}} %</h2></div>
             </div>
           </v-card-text>
         </v-card>
@@ -209,7 +202,7 @@
             <div>
               <h3 class="headline mb-0">Utilize</h3>
               <h3 class="headline mb-0">Out</h3>
-              <div><h2 style="color:#ff6666">{{this.sumOut ? this.sumOut .toFixed(3) : 'N/A'}} %</h2></div>
+              <div v-if="nodeonline.alive2"><h2 style="color:#ff6666">{{this.sumOut ? this.sumOut .toFixed(3) : 'N/A'}} %</h2></div>
             </div>
           </v-card-text>
         </v-card>
@@ -223,7 +216,7 @@
 
            <v-card-text class="px-0">
             <h3 class="headline mb-0">Main Link</h3></br>
-            <div>
+            <div v-if="nodeonline.alive2">
               <v-layout>
                 <v-flex d-flex xs6 >
                   <i class="fas fa-download" style="font-size:3em; color:green "></i>
@@ -247,7 +240,7 @@
     <v-flex d-flex xs6 >
       <v-card>
       <v-card-text class="px-0">
-          <div>
+          <div v-if="nodeonline.alive2">
 <h3 class="headline mb-0">Inbound</h3>
 <h3 class="headline mb-0">Alert</h3>
 
@@ -260,7 +253,7 @@
                 bottom
               ></v-select></center>
               </div>
-              <div>
+              <div v-if="nodeonline.alive2">
               <v-btn @click="inboundLimit" color="primary">Submit</v-btn>
             </div>
         </v-card-text>
@@ -269,7 +262,7 @@
     <v-flex d-flex xs6 >
       <v-card>
         <v-card-text class="px-0">
-            <div>
+            <div v-if="nodeonline.alive2">
         <h3 class="headline mb-0">Outbound</h3>
         <h3 class="headline mb-0">Alert</h3>
 
@@ -282,7 +275,7 @@
                 bottom
               ></v-select></center>
               </div>
-              <div>
+              <div v-if="nodeonline.alive2">
          <v-btn @click="outboundLimit" color="primary">Submit</v-btn>
             </div>
       </v-card-text>
@@ -291,7 +284,7 @@
   </v-layout>
 </br>
 
-<div style="float:left;" v-if="datacollection">
+<div style="float:left;" v-if="datacollection && nodeonline.alive2">
 <h3 class="headline mb-0">Inbound / Outbound (Mb)</h3></br>
 <line-chart :chart-data="datacollection"
   :options="{responsive: true, maintainAspectRatio: false, elements: { point: { radius: 1 }
@@ -300,7 +293,7 @@
   ></line-chart>
 </div>
 </br>
-<div style="float:left;" v-if="datacollectionspeed">
+<div style="float:left;" v-if="datacollectionspeed && nodeonline.alive2">
 <h3 class="headline mb-0">Download / Upload (Mb/s)</h3></br>
 <line-chart :chart-data="datacollectionspeed"
 :options="{responsive: true, maintainAspectRatio: false, elements: { point: { radius: 1 }
@@ -308,6 +301,7 @@
 :height="250"
 ></line-chart>
 </div>
+
 </v-app>
 </template>
 
@@ -380,10 +374,13 @@ export default {
     })
     await this.$bindAsArray('todoscheck', alive, null, () => {
       this.nodeonline = this.todoscheck.find(datas => datas.nodeName === 'Node415')
+      this.nodetoponline = this.nodeonline.alive2
     })
   },
   data () {
     return {
+      testt: true,
+      testf: false,
       nameau: '',
       dialog: false,
       datacollection: null,
@@ -409,7 +406,10 @@ export default {
       todoscheck: '',
       newdata: '',
       check: '',
-      nodeonline: '',
+      nodeonline: {
+        alive2: true
+      },
+      nodetoponline: false,
       namenode: '',
       sumIn: '',
       sumOut: ''
@@ -463,9 +463,6 @@ export default {
         vm.lasdown = myarray[myarray.length - 1]
         this.fillData()
         this.fillDataspeed()
-            // this.$unbind('todos')
-          // })
-        // }, 2000)
         console.log('change')
       } else {
         console.log('nochange')
@@ -474,6 +471,7 @@ export default {
     todoscheck: function (newval) {
       if (this.check === 1) {
         this.nodeonline = this.todoscheck.find(datas => datas.nodeName === 'Node415')
+        this.nodetoponline = this.nodeonline.alive2
         console.log('online-change')
       } else {
         console.log('online-nochange')

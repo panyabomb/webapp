@@ -14,14 +14,8 @@
         </v-flex>
 
         <v-flex d-flex xs6 >
-          <v-card color="green" class="white--text" v-if="nodeonline.alive2">
-            <v-card-title primary-title>
-              <div>
-                <h2 class="headline mb-0">Online</h2>
-              </div>
-            </v-card-title>
-          </v-card>
-          <v-card color="red" class="white--text" v-else>
+
+          <v-card color="red" class="white--text">
             <v-card-title primary-title>
               <div>
                 <h2 class="headline mb-0">Offline</h2>
@@ -29,9 +23,31 @@
             </v-card-title>
           </v-card>
         </v-flex>
+ <!-- showdialog ip  -->
+        <div v-if="dialog">
+          <v-layout row justify-center >
+    <v-dialog v-model="dialog" scrollable max-width="300px" persistent>
+      <v-card>
+        <v-card-title class="headline">IP List</v-card-title>
+        <v-divider></v-divider>
+        <v-card-text style="height: 300px;">
+          <div v-for="(item, index) in value.iplist">
+            <v-card-text class="title" style="color:#ff6666">{{item}}</v-card-text>
+          </div>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" flat @click.native="dialog = false, startscrolling()">Close</v-btn>
+          <v-spacer></v-spacer>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-layout>
+        </div>
 
         <v-flex d-flex xs6 >
-          <v-card>
+          <v-card @click.native.stop="dialog = true, stopscrolling()" :hover='true'>
             <v-card-text class="px-0">
               <div>
                 <h3 class="headline mb-0">Connected</h3>
@@ -355,6 +371,7 @@ export default {
   data () {
     return {
       nameau: '',
+      dialog: false,
       datacollection: null,
       datacollectionspeed: null,
       drawer: false,
@@ -482,6 +499,20 @@ export default {
         ]
       }
     },
+    stopscrolling () {
+      if (/Android|webOS|iPhone|iPad|BlackBerry|Windows Phone|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent)) {
+        document.documentElement.style.overflow = 'hidden'
+        document.documentElement.style.position = 'fixed'
+      } else {
+        document.documentElement.style.overflow = 'hidden'
+      }
+      console.log('lockscrolling')
+    },
+    startscrolling () {
+      document.documentElement.style.overflow = 'scroll'
+      document.documentElement.style.position = 'static'
+      console.log('startcrolling')
+    },
     inboundLimit () {
       // var key = this.dataTouse.find(datas => datas.node === 'Node3850')
       if (this.inbo !== '') {
@@ -517,4 +548,7 @@ export default {
     max-width: 600px;
     margin:  150px auto;
   }
+  html, body {
+  overflow: scroll;
+}
 </style>

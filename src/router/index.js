@@ -3,11 +3,9 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Node415 from '@/components/Node415'
 import Node4503 from '@/components/Node4503'
-import Node101C from '@/components/Node101C'
 import Node124 from '@/components/Node124'
 import Node330A from '@/components/Node330A'
 import NodePsad from '@/components/NodePsad'
-import NodeRouter from '@/components/NodeRouter'
 import Nodeshop from '@/components/Nodeshop'
 import Node3850 from '@/components/Node3850'
 import node3 from '@/components/node3'
@@ -20,14 +18,6 @@ export default new Router({
       path: '/Helloworld',
       name: 'HelloWorld',
       component: HelloWorld,
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path: '/Node101C',
-      name: 'Node101C',
-      component: Node101C,
       meta: {
         requiresAuth: true
       }
@@ -68,14 +58,6 @@ export default new Router({
       path: '/Node3850',
       name: 'Node3850',
       component: Node3850,
-      meta: {
-        requiresAuth: true
-      }
-    },
-    {
-      path: '/NodeRouter',
-      name: 'NodeRouter',
-      component: NodeRouter,
       meta: {
         requiresAuth: true
       }
